@@ -1,0 +1,14 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Alpha Version",
+    "description" : "Test Updated",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/DatateraTech/DatateraAlpha/1.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "paths" : { },
+  "components" : { }
+}
