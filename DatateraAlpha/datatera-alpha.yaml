@@ -2,7 +2,12 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "Alpha Version",
-    "description" : "Test Updated",
+    "description" : "Compute to Data flow on Rinkeby Blockchain Network",
+    "contact" : {
+      "name" : "Datatera Technology",
+      "url" : "https://app.swaggerhub.com/apis/Transtar_Transend/OrderApi",
+      "email" : "info@datatera.se"
+    },
     "version" : "1.0"
   },
   "servers" : [ {
