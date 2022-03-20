@@ -64,6 +64,6 @@ def publish_datasets(wallet_address):
     return jsonify(f"DATA_datatoken.address = '{DATA_datatoken.address}'")
 
 # Checks to see if the name of the package is the run as the main package.
-if __name__ == "__main__":
+#if __name__ == "__main__":
 	# Runs the Flask application only if the publish_dataset.py file is being run.
-	app.run()
+	#app.run()
