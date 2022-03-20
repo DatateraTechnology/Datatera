@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from ocean_lib.ocean.ocean import Ocean
 from ocean_lib.config import Config
+from ocean_lib.example_config import ExampleConfig
 from ocean_lib.web3_internal.wallet import Wallet
 from ocean_lib.web3_internal.currency import to_wei
 from flask_swagger import swagger
@@ -22,7 +23,8 @@ def get_docs():
     return render_template('swaggerui.html')
 
 # Print Core Ocean Protocol Modules url
-config = Config('./config.ini')
+#config = Config('./config.ini')
+config = ExampleConfig.get_config()
 ocean = Ocean(config)
 
 print(f"config.network_url = '{config.network_url}'")
