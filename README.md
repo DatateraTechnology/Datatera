@@ -1,2 +1,2 @@
-# Alpha
-Some code examples
+# Alpha version
+Compute-To-Data Flow
