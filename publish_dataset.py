@@ -3,9 +3,23 @@ from ocean_lib.ocean.ocean import Ocean
 from ocean_lib.config import Config
 from ocean_lib.web3_internal.wallet import Wallet
 from ocean_lib.web3_internal.currency import to_wei
+from flask_swagger import swagger
+from flask import Flask, jsonify, render_template
 
 # Creating a new "app" by using the Flask constructor. Passes __name__ as a parameter.
 app = Flask(__name__)
+
+@app.route("/spec")
+def spec():
+    swag = swagger(app)
+    swag['info']['version'] = "1.0"
+    swag['info']['title'] = "Datatera Alpha"
+    return jsonify(swag)
+
+@app.route('/api/docs')
+def get_docs():
+    print('sending docs')
+    return render_template('swaggerui.html')
 
 # Print Core Ocean Protocol Modules url
 config = Config('./config.ini')
@@ -40,6 +54,7 @@ def publish_dataset():
 # This function requires a parameter from the URL.
 def publish_datasets(wallet_address):
 
+    print(f"wallet_address = '{wallet_address}'")
     alice_wallet = Wallet(ocean.web3, wallet_address, 
     config.block_confirmations, config.transaction_timeout)
     print(f"alice_wallet.address = '{alice_wallet.address}'")
