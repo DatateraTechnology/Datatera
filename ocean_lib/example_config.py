@@ -131,7 +131,8 @@ class ExampleConfig:
         Chain ID is determined by querying the RPC specified by `OCEAN_NETWORK_URL` envvar.
         """
 
-        network_url = os.getenv("OCEAN_NETWORK_URL")
+        network_url = "https://rinkeby.infura.io/v3/0b5fb8d12d454325a8dddc19124c2b26"
+        #os.getenv("OCEAN_NETWORK_URL")
         assert (
             network_url is not None
         ), "Cannot use ocean-lib without a specified network URL."
