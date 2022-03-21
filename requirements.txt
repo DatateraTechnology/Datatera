@@ -8,3 +8,4 @@ eth_account
 web3 >= 5.19.0
 json-sempai >= 0.4.0
 scipy >= 1.7.3
+flask_swagger >= 0.2.14
