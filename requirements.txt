@@ -2,7 +2,7 @@ connexion == 2.6.0
 python_dateutil == 2.6.0
 setuptools >= 21.0.0
 enforce_typing
-eth_utils >= 0.6.1
+eth_utils >= 1.10.0
 artifacts
 eth_account
-web3
+web3 >= 5.19.0
