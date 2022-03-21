@@ -6,3 +6,4 @@ eth_utils >= 1.10.0
 artifacts
 eth_account
 web3 >= 5.19.0
+jsonsempai >= 0.4.0
