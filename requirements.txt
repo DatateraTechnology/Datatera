@@ -4,3 +4,4 @@ setuptools >= 21.0.0
 enforce_typing
 eth_utils
 artifacts
+eth_account
