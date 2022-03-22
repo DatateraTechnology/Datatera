@@ -23,8 +23,8 @@ def get_docs():
     return render_template('swaggerui.html')
 
 # Print Core Ocean Protocol Modules url
-#config = Config('./config.ini')
-config = ExampleConfig.get_config()
+config = Config('./config.ini')
+#config = ExampleConfig.get_config()
 ocean = Ocean(config)
 
 print(f"config.network_url = '{config.network_url}'")
