@@ -106,7 +106,6 @@ swagger-ui-bundle==0.0.9
 toolz==0.11.2
 tqdm==4.62.3
 Twisted==18.9.0
-ufw==0.36
 unattended-upgrades==0.1
 urllib3==1.25.8
 varint==1.0.2
