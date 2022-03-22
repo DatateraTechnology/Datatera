@@ -103,7 +103,6 @@ six==1.14.0
 sos==0.22.7
 ssh-import-id==5.10
 swagger-ui-bundle==0.0.9
-systemd-python==234
 toolz==0.11.2
 tqdm==4.62.3
 Twisted==18.9.0
