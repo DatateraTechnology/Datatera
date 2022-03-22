@@ -2,10 +2,13 @@ connexion == 2.6.0
 python_dateutil == 2.6.0
 setuptools >= 21.0.0
 enforce_typing
-eth_utils >= 1.10.0
 artifacts
-eth_account
 web3 >= 5.19.0
 json-sempai >= 0.4.0
 scipy >= 1.7.3
 flask_swagger >= 0.2.14
+eth-abi <3.0.0, >=2.0.0b6
+eth-account<0.6.0,>=0.5.7
+eth-typing<3.0.0,>=2.0.0
+eth-utils<2.0.0,>=1.9.5 
+jsonschema<4.0.0,>=3.2.0
