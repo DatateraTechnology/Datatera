@@ -22,7 +22,6 @@ dbus-python==1.2.16
 Deprecated==1.2.13
 distlib==0.3.4
 distro==1.4.0
-distro-info===0.23ubuntu1
 enforce-typing==1.0.0.post1
 entrypoints==0.3
 eth-abi==2.1.1
