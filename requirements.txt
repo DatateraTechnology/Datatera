@@ -12,4 +12,3 @@ flask_swagger >= 0.2.14
 flask
 ocean-lib >= 0.8.5
 ocean-contracts >=0.6.9
-importlib.metadata
