@@ -1,4 +1,3 @@
-from importlib.metadata import metadata
 from flask import Flask, jsonify
 from ocean_lib.ocean.ocean import Ocean
 from ocean_lib.config import Config
