@@ -1,0 +1,218 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Datatera Alpha API",
+    "description": "An API for Compute-to-Data Flow"
+  },
+  "paths": {
+    "/alpha/1.0/createwallet/{wallet_address}": {
+      "get": {
+        "tags": [
+          "Create Wallet"
+        ],
+        "description": "Returns created wallet",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_address",
+            "required": true,
+            "description": "wallet_address",
+            "schema": {
+              "type": "string",
+              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Wallet Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/1.0/tokenizedataset/{wallet_address}": {
+      "get": {
+        "tags": [
+          "Create Datatoken for Dataset"
+        ],
+        "description": "Returns datatoken address for the dataset",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_address",
+            "required": true,
+            "description": "wallet_address",
+            "schema": {
+              "type": "string",
+              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datatoken address created for the dataset",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/1.0/createmetadata/<url>": {
+      "get": {
+        "tags": [
+          "Create Metadata"
+        ],
+        "description": "Returns metadata",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "url",
+            "required": true,
+            "description": "url",
+            "schema": {
+              "type": "string",
+              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/1.0/createdataservice/{wallet_address}": {
+      "get": {
+        "tags": [
+          "Create Data Service"
+        ],
+        "description": "Returns data service attributes",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_address",
+            "required": true,
+            "description": "wallet_address",
+            "schema": {
+              "type": "string",
+              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data Service Attributes created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/1.0/publishmetadata/{wallet_address}/<url>": {
+      "get": {
+        "tags": [
+          "Publish Metadata"
+        ],
+        "description": "Returns published metadata",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_address",
+            "required": true,
+            "description": "wallet_address",
+            "schema": {
+              "type": "string",
+              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+            }
+          },
+          {
+            "in": "path",
+            "name": "url",
+            "required": true,
+            "description": "url",
+            "schema": {
+              "type": "string",
+              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Metadata published",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/1.0/tokenizealgorithm/{wallet_address}": {
+      "get": {
+        "tags": [
+          "Create Datatoken for Algorithm"
+        ],
+        "description": "Returns datatoken address for the algorithm",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "wallet_address",
+            "required": true,
+            "description": "wallet_address",
+            "schema": {
+              "type": "string",
+              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Datatoken address created for the algorithm",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
