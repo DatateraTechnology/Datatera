@@ -8,6 +8,8 @@ from ocean_lib.data_provider.data_service_provider import DataServiceProvider
 from ocean_lib.services.service import Service
 from ocean_lib.common.agreements.service_types import ServiceTypes
 from ocean_lib.assets import trusted_algorithms
+from ocean_lib.web3_internal.constants import ZERO_ADDRESS
+from ocean_lib.models.compute_input import ComputeInput
 
 app = Flask(__name__)
 
@@ -103,9 +105,8 @@ def publish_metadata(wallet_address, url):
 	  }
 	],
 	"name": "branin", "author": "Trent", "license": "CC0",
-	"dateCreated": "2019-12-28T10:55:11Z"
+	"dateCreated": "2019-12-28T10:55:11Z"}
     }
-}
 
     DATA_service_attributes = {
     "main": {
@@ -113,17 +114,15 @@ def publish_metadata(wallet_address, url):
         "creator": wallet_address,
         "timeout": 3600 * 24,
         "datePublished": "2019-12-28T10:55:11Z",
-        "cost": 1.0,
+        "cost": 1.0}
     }
-}
 
     provider_url = DataServiceProvider.get_url(ocean.config)
 
     DATA_compute_service = Service(
         service_endpoint=provider_url,
         service_type=ServiceTypes.CLOUD_COMPUTE,
-        attributes=DATA_service_attributes
-    )
+        attributes=DATA_service_attributes)
 
     alice_wallet = Wallet(ocean.web3, wallet_address, 
     config.block_confirmations, config.transaction_timeout)
@@ -182,9 +181,8 @@ def publish_algorithm(wallet_address):
 	  }
 	],
 	"name": "gpr", "author": "Trent", "license": "CC0",
-	"dateCreated": "2020-01-28T10:55:11Z"
+	"dateCreated": "2020-01-28T10:55:11Z"}
     }
-}
 
     ALG_service_attributes = {
             "main": {
@@ -201,8 +199,7 @@ def publish_algorithm(wallet_address):
     ALG_access_service = Service(
         service_endpoint = provider_url,
         service_type = ServiceTypes.CLOUD_COMPUTE,
-        attributes = ALG_service_attributes
-    )
+        attributes = ALG_service_attributes)
 
     ALG_ddo = ocean.assets.create(
     metadata=ALG_metadata,
@@ -241,13 +238,13 @@ def authorize_algorithm(bob_wallet_address, alice_wallet_address, data_url, algo
         "timeout": 3600 * 24,
         "datePublished": "2019-12-28T10:55:11Z",
         "cost": 1.0,
+        }
     }
-}
+
     DATA_compute_service = Service(
         service_endpoint=provider_url,
         service_type=ServiceTypes.CLOUD_COMPUTE,
-        attributes=DATA_service_attributes
-    )
+        attributes=DATA_service_attributes)
 
     DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
     DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
@@ -284,7 +281,7 @@ def authorize_algorithm(bob_wallet_address, alice_wallet_address, data_url, algo
 	"name": "gpr", "author": "Trent", "license": "CC0",
 	"dateCreated": "2020-01-28T10:55:11Z"
     }
-}
+    }
 
     ALG_service_attributes = {
             "main": {
@@ -301,8 +298,7 @@ def authorize_algorithm(bob_wallet_address, alice_wallet_address, data_url, algo
     ALG_access_service = Service(
         service_endpoint = provider_url,
         service_type = ServiceTypes.CLOUD_COMPUTE,
-        attributes = ALG_service_attributes
-    )
+        attributes = ALG_service_attributes)
 
     ALG_ddo = ocean.assets.create(
     metadata=ALG_metadata,
@@ -317,11 +313,167 @@ def authorize_algorithm(bob_wallet_address, alice_wallet_address, data_url, algo
         ocean.web3,
         bob_wallet_address,
         config.block_confirmations,
-        config.transaction_timeout,
-    )
+        config.transaction_timeout)
 
     DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
     ALG_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+
+#Start Compute Job
+@app.route("/alpha/1.0/computejob/<string:bob_wallet_address>/<string:alice_wallet_address>/<string:data_url>/<string:algo_url>", methods=["GET"], endpoint='compute_job')
+def compute_job(bob_wallet_address, alice_wallet_address, data_url, algo_url):
+
+    alice_wallet = Wallet(ocean.web3, alice_wallet_address, 
+    config.block_confirmations, config.transaction_timeout)
+
+    DATA_metadata = {
+        "main": {
+            "type": "dataset",
+            "files": [
+        {
+            "url": data_url,
+            "index": 0,
+            "contentType": "text/text"
+        }
+        ],
+        "name": "branin", "author": "Trent", "license": "CC0",
+        "dateCreated": "2019-12-28T10:55:11Z"
+        }
+    }
+
+    DATA_service_attributes = {
+    "main": {
+        "name": "DATA_dataAssetAccessServiceAgreement",
+        "creator": alice_wallet_address,
+        "timeout": 3600 * 24,
+        "datePublished": "2019-12-28T10:55:11Z",
+        "cost": 1.0,}
+    }
+    
+    provider_url = DataServiceProvider.get_url(ocean.config)
+    
+    DATA_compute_service = Service(
+        service_endpoint=provider_url,
+        service_type=ServiceTypes.CLOUD_COMPUTE,
+        attributes=DATA_service_attributes)
+
+    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
+ 
+    DATA_ddo = ocean.assets.create(
+    metadata = DATA_metadata,
+    publisher_wallet = alice_wallet,
+    services = [DATA_compute_service],
+    data_token_address = DATA_datatoken.address)
+
+    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
+    
+    ALG_metadata =  {
+    "main": {
+        "type": "algorithm",
+        "algorithm": {
+            "language": "python",
+            "format": "docker-image",
+            "version": "0.1",
+            "container": {
+              "entrypoint": "python $ALGO",
+              "image": "oceanprotocol/algo_dockers",
+              "tag": "python-branin"
+            }
+        },
+        "files": [
+	  {
+	    "url": algo_url,
+	    "index": 0,
+	    "contentType": "text/text",
+	  }
+	],
+	"name": "gpr", "author": "Trent", "license": "CC0",
+	"dateCreated": "2020-01-28T10:55:11Z"}
+    }
+
+    ALG_service_attributes = {
+            "main": {
+                "name": "ALG_dataAssetAccessServiceAgreement",
+                "creator": alice_wallet.address,
+                "timeout": 3600 * 24,
+                "datePublished": "2020-01-28T10:55:11Z",
+                "cost": 1.0,
+            }
+        }
+
+    ALG_access_service = Service(
+        service_endpoint = provider_url,
+        service_type = ServiceTypes.CLOUD_COMPUTE,
+        attributes = ALG_service_attributes)
+
+    ALG_ddo = ocean.assets.create(
+    metadata = ALG_metadata,
+    publisher_wallet = alice_wallet,
+    services = [ALG_access_service],
+    data_token_address = ALG_datatoken.address)
+
+    trusted_algorithms.add_publisher_trusted_algorithm(DATA_ddo, ALG_ddo.did, config.metadata_cache_uri)
+    ocean.assets.update(DATA_ddo, publisher_wallet = alice_wallet)
+
+    bob_wallet = Wallet(
+        ocean.web3,
+        bob_wallet_address,
+        config.block_confirmations,
+        config.transaction_timeout)
+
+    DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+    ALG_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+
+    DATA_did = DATA_ddo.did
+    ALG_did = ALG_ddo.did
+    DATA_DDO = ocean.assets.resolve(DATA_did)
+    ALG_DDO = ocean.assets.resolve(ALG_did)
+
+    compute_service = DATA_DDO.get_service('compute')
+    algo_service = ALG_DDO.get_service('access')
+ 
+    bob_wallet = Wallet(
+        ocean.web3,
+        bob_wallet_address,
+        config.block_confirmations,
+        config.transaction_timeout)
+
+    dataset_order_requirements = ocean.assets.order(
+    DATA_did, bob_wallet.address, service_type = compute_service.type)
+    
+    DATA_order_tx_id = ocean.assets.pay_for_service(
+    ocean.web3,
+    dataset_order_requirements.amount,
+    dataset_order_requirements.data_token_address,
+    DATA_did,
+    compute_service.index,
+    ZERO_ADDRESS,
+    bob_wallet,
+    dataset_order_requirements.computeAddress)
+
+    algo_order_requirements = ocean.assets.order(
+    ALG_did, bob_wallet.address, service_type = algo_service.type)
+    
+    ALG_order_tx_id = ocean.assets.pay_for_service(
+        ocean.web3,
+        algo_order_requirements.amount,
+        algo_order_requirements.data_token_address,
+        ALG_did,
+        algo_service.index,
+        ZERO_ADDRESS,
+        bob_wallet,
+        algo_order_requirements.computeAddress)
+
+    compute_inputs = [ComputeInput(DATA_did, DATA_order_tx_id, compute_service.index)]
+    job_id = ocean.compute.start(
+    compute_inputs,
+    bob_wallet,
+    algorithm_did = ALG_did,
+    algorithm_tx_id = ALG_order_tx_id,
+    algorithm_data_token = ALG_datatoken.address)
+
+    return jsonify(f"job_id = '{job_id}'")
 
 # Checks to see if the name of the package is the run as the main package.
 #if __name__ == "__main__":
