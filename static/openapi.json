@@ -27,7 +27,7 @@
         }
       }
     },
-    "/alpha/1.0/tokenizedataset": {
+    "/alpha/tokenizedataset": {
       "get": {
         "tags": [
           "tokenizedataset"
