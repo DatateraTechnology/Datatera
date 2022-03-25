@@ -6,10 +6,10 @@
     "description": "An API for Compute-to-Data Flow"
   },
   "paths": {
-    "/alpha/1.0/createwallet": {
+    "/alpha/createwallet": {
       "get": {
         "tags": [
-          "Create Metadata"
+          "createwallet"
         ],
         "description": "Returns created wallet",
         "responses": {
@@ -30,7 +30,7 @@
     "/alpha/1.0/tokenizedataset": {
       "get": {
         "tags": [
-          "Create Datatoken for Dataset"
+          "tokenizedataset"
         ],
         "description": "Returns datatoken address for the dataset",
         "responses": {
@@ -48,10 +48,10 @@
         }
       }
     },
-    "/alpha/1.0/publishmetadata": {
+    "/alpha/publishmetadata": {
       "get": {
         "tags": [
-          "Publish Metadata"
+          "publishmetadata"
         ],
         "description": "Returns published metadata",
         "responses": {
@@ -69,10 +69,10 @@
         }
       }
     },
-    "/alpha/1.0/tokenizealgorithm": {
+    "/alpha/tokenizealgorithm": {
       "get": {
         "tags": [
-          "Create Datatoken for Algorithm"
+          "tokenizealgorithm"
         ],
         "description": "Returns datatoken address for the algorithm",
         "responses": {
@@ -90,10 +90,10 @@
         }
       }
     },
-    "/alpha/1.0/publishalgorithm": {
+    "/alpha/publishalgorithm": {
       "get": {
         "tags": [
-          "Publish Algorithm"
+          "publishalgorithm"
         ],
         "description": "Returns published algorithm",
         "responses": {
@@ -111,10 +111,10 @@
         }
       }
     },
-    "/alpha/1.0/authorizealgorithm": {
+    "/alpha/authorizealgorithm": {
       "get": {
         "tags": [
-          "Authorize Algorithm"
+          "authorizealgorithm"
         ],
         "description": "Returns authorized algorithm",
         "responses": {
@@ -132,10 +132,10 @@
         }
       }
     },    
-    "/alpha/1.0/computejob": {
+    "/alpha/computejob": {
       "get": {
         "tags": [
-          "Compute Job"
+          "authorizealgorithm"
         ],
         "description": "Returns computed job",
         "responses": {
