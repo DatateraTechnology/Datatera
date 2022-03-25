@@ -50,13 +50,13 @@ bob_wallet = Wallet(ocean.web3, Bob_Wallet_Private_Key,
 config.block_confirmations, config.transaction_timeout)
 
 #Create Data Provider Wallet
-@app.route("/alpha/1.0/createwallet", methods=["GET"], endpoint='create_wallet')
+@app.route("/alpha/createwallet", methods=["GET"], endpoint='create_wallet')
 def create_wallet():
 
     return jsonify(f"alice_wallet.address = '{alice_wallet.address}'")
 
 #Tokenize Dataset
-@app.route("/alpha/1.0/tokenizedataset", methods=["GET"], endpoint='tokenize_dataset')
+@app.route("/alpha/tokenizedataset", methods=["GET"], endpoint='tokenize_dataset')
 def tokenize_dataset():
 
     DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
@@ -65,7 +65,7 @@ def tokenize_dataset():
     return jsonify(f"DATA_datatoken.address = '{DATA_datatoken.address}'")
 
 #Publish Metadata
-@app.route("/alpha/1.0/publishmetadata", methods=["GET"], endpoint='publish_metadata')
+@app.route("/alpha/publishmetadata", methods=["GET"], endpoint='publish_metadata')
 def publish_metadata():
 
     DATA_metadata = {
@@ -110,7 +110,7 @@ def publish_metadata():
     return jsonify(f"DATA_ddo.did = '{DATA_ddo.did}'")
 
 #Tokenize Algorithm
-@app.route("/alpha/1.0/tokenizealgorithm", methods=["GET"], endpoint='tokenize_algorithm')
+@app.route("/alpha/tokenizealgorithm", methods=["GET"], endpoint='tokenize_algorithm')
 def tokenize_algorithm():
 
     ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
@@ -119,7 +119,7 @@ def tokenize_algorithm():
     return jsonify(f"ALG_datatoken.address = '{ALG_datatoken.address}'")
 
 #Publish Algorithm
-@app.route("/alpha/1.0/publishalgorithm", methods=["GET"], endpoint='publish_algorithm')
+@app.route("/alpha/publishalgorithm", methods=["GET"], endpoint='publish_algorithm')
 def publish_algorithm():
 
     ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
@@ -175,7 +175,7 @@ def publish_algorithm():
     return jsonify(f"ALG did = '{ALG_ddo.did}'")
 
 #Authorize Algorithm
-@app.route("/alpha/1.0/authorizealgorithm", methods=["GET"], endpoint='authorize_algorithm')
+@app.route("/alpha/authorizealgorithm", methods=["GET"], endpoint='authorize_algorithm')
 def authorize_algorithm():
 
     DATA_metadata = {
@@ -277,7 +277,7 @@ def authorize_algorithm():
     return jsonify(f"DATA_datatoken = '{DATA_datatoken}' ALG_datatoken = '{ALG_datatoken}'")
 
 #Start Compute Job
-@app.route("/alpha/1.0/computejob", methods=["GET"], endpoint='compute_job')
+@app.route("/alpha/computejob", methods=["GET"], endpoint='compute_job')
 def compute_job():
 
     DATA_metadata = {
