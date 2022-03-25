@@ -138,7 +138,7 @@
         }
       }
     },
-    "/alpha/1.0/publishmetadata/{wallet_address}/<url>": {
+    "/alpha/1.0/publishmetadata/{wallet_address}/{string:url}": {
       "get": {
         "tags": [
           "Publish Metadata"
