@@ -6,24 +6,12 @@
     "description": "An API for Compute-to-Data Flow"
   },
   "paths": {
-    "/alpha/1.0/createwallet/{wallet_address}": {
+    "/alpha/1.0/createwallet": {
       "get": {
         "tags": [
-          "Create Wallet"
+          "Create Metadata"
         ],
         "description": "Returns created wallet",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "wallet_address",
-            "required": true,
-            "description": "wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Wallet Created",
@@ -39,24 +27,12 @@
         }
       }
     },
-    "/alpha/1.0/tokenizedataset/{wallet_address}": {
+    "/alpha/1.0/tokenizedataset": {
       "get": {
         "tags": [
           "Create Datatoken for Dataset"
         ],
         "description": "Returns datatoken address for the dataset",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "wallet_address",
-            "required": true,
-            "description": "wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Datatoken address created for the dataset",
@@ -72,100 +48,12 @@
         }
       }
     },
-    "/alpha/1.0/createmetadata/<url>": {
-      "get": {
-        "tags": [
-          "Create Metadata"
-        ],
-        "description": "Returns metadata",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "url",
-            "required": true,
-            "description": "url",
-            "schema": {
-              "type": "string",
-              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Metadata created",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": ""
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/alpha/1.0/createdataservice/{wallet_address}": {
-      "get": {
-        "tags": [
-          "Create Data Service"
-        ],
-        "description": "Returns data service attributes",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "wallet_address",
-            "required": true,
-            "description": "wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Data Service Attributes created",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string",
-                  "example": ""
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/alpha/1.0/publishmetadata/{wallet_address}/{string:url}": {
+    "/alpha/1.0/publishmetadata": {
       "get": {
         "tags": [
           "Publish Metadata"
         ],
         "description": "Returns published metadata",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "wallet_address",
-            "required": true,
-            "description": "wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          },
-          {
-            "in": "path",
-            "name": "url",
-            "required": true,
-            "description": "url",
-            "schema": {
-              "type": "string",
-              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Metadata published",
@@ -181,24 +69,12 @@
         }
       }
     },
-    "/alpha/1.0/tokenizealgorithm/{wallet_address}": {
+    "/alpha/1.0/tokenizealgorithm": {
       "get": {
         "tags": [
           "Create Datatoken for Algorithm"
         ],
         "description": "Returns datatoken address for the algorithm",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "wallet_address",
-            "required": true,
-            "description": "wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Datatoken address created for the algorithm",
@@ -214,24 +90,12 @@
         }
       }
     },
-    "/alpha/1.0/publishalgorithm/{wallet_address}": {
+    "/alpha/1.0/publishalgorithm": {
       "get": {
         "tags": [
           "Publish Algorithm"
         ],
         "description": "Returns published algorithm",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "wallet_address",
-            "required": true,
-            "description": "wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Algorithm published",
@@ -247,54 +111,12 @@
         }
       }
     },
-    "/alpha/1.0/authorizealgorithm/{bob_wallet_address}/{alice_wallet_address}/<data_url>/<algo_url>": {
+    "/alpha/1.0/authorizealgorithm": {
       "get": {
         "tags": [
           "Authorize Algorithm"
         ],
         "description": "Returns authorized algorithm",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "bob_wallet_address",
-            "required": true,
-            "description": "bob_wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0xef4b441145c1d0f3b4bc6d61d29f5c6e502359481152f869247c7a4244d45209"
-            }
-          },
-          {
-            "in": "path",
-            "name": "alice_wallet_address",
-            "required": true,
-            "description": "alice_wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          },
-          {
-            "in": "path",
-            "name": "data_url",
-            "required": true,
-            "description": "data_url",
-            "schema": {
-              "type": "string",
-              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
-            }
-          },
-          {
-            "in": "path",
-            "name": "algo_url",
-            "required": true,
-            "description": "algo_url",
-            "schema": {
-              "type": "string",
-              "example": "https://raw.githubusercontent.com/trentmc/branin/main/gpr.py"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Algorithm authorized",
@@ -310,54 +132,12 @@
         }
       }
     },    
-    "/alpha/1.0/computejob/{bob_wallet_address}/{alice_wallet_address}/<data_url>/<algo_url>": {
+    "/alpha/1.0/computejob": {
       "get": {
         "tags": [
           "Compute Job"
         ],
         "description": "Returns computed job",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "bob_wallet_address",
-            "required": true,
-            "description": "bob_wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0xef4b441145c1d0f3b4bc6d61d29f5c6e502359481152f869247c7a4244d45209"
-            }
-          },
-          {
-            "in": "path",
-            "name": "alice_wallet_address",
-            "required": true,
-            "description": "alice_wallet_address",
-            "schema": {
-              "type": "string",
-              "example": "0x5d75837394b078ce97bc289fa8d75e21000573520bfa7784a9d28ccaae602bf8"
-            }
-          },
-          {
-            "in": "path",
-            "name": "data_url",
-            "required": true,
-            "description": "data_url",
-            "schema": {
-              "type": "string",
-              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
-            }
-          },
-          {
-            "in": "path",
-            "name": "algo_url",
-            "required": true,
-            "description": "algo_url",
-            "schema": {
-              "type": "string",
-              "example": "https://raw.githubusercontent.com/trentmc/branin/main/gpr.py"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Job computed",
