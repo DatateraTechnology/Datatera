@@ -10,9 +10,8 @@ from ocean_lib.common.agreements.service_types import ServiceTypes
 from ocean_lib.assets import trusted_algorithms
 from ocean_lib.web3_internal.constants import ZERO_ADDRESS
 from ocean_lib.models.compute_input import ComputeInput
-#import pickle
-#import numpy
-#from matplotlib import pyplot
+import pickle, numpy, time
+from matplotlib import pyplot
 
 app = Flask(__name__)
 
@@ -416,25 +415,38 @@ def compute_job():
     algorithm_tx_id = ALG_order_tx_id,
     algorithm_data_token = ALG_datatoken.address)
 
-    return jsonify(f"job_id = '{job_id}'")
+    time.sleep(30)
 
-#Monitor Computing Job
+    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-#ocean.compute.status(DATA_did, job_id, bob_wallet)
+    time.sleep(30)
 
-#result = ocean.compute.result_file(DATA_did, job_id, 0, bob_wallet)
+    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-#model = pickle.loads(result) 
+    time.sleep(30)
 
-#X0_vec = numpy.linspace(-5., 10., 15)
-#X1_vec = numpy.linspace(0., 15., 15)
-#X0, X1 = numpy.meshgrid(X0_vec, X1_vec)
-#b, c, t = 0.12918450914398066, 1.5915494309189535, 0.039788735772973836
-#u = X1 - b*X0**2 + c*X0 - 6
-#r = 10.*(1. - t) * numpy.cos(X0) + 10
-#Z = u**2 + r
+    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-#fig, ax = pyplot.subplots(subplot_kw={"projection": "3d"})
-#ax.scatter(X0, X1, model, c="r", label="model")
-#pyplot.title("Data + model")
-#pyplot.show()
+    time.sleep(30)
+
+    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
+
+    result = ocean.compute.result_file(DATA_did, job_id, 0, bob_wallet)
+    print(f"Result: {result}")
+
+    model = pickle.loads(result)
+
+    X0_vec = numpy.linspace(-5., 10., 15)
+    X1_vec = numpy.linspace(0., 15., 15)
+    X0, X1 = numpy.meshgrid(X0_vec, X1_vec)
+    b, c, t = 0.12918450914398066, 1.5915494309189535, 0.039788735772973836
+    u = X1 - b*X0**2 + c*X0 - 6
+    r = 10.*(1. - t) * numpy.cos(X0) + 10
+    Z = u**2 + r
+
+    fig, ax = pyplot.subplots(subplot_kw={"projection": "3d"})
+    ax.scatter(X0, X1, model, c="r", label="model")
+    pyplot.title("Data + model")
+    pyplot.show()
+
+    return jsonify(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
