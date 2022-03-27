@@ -12,7 +12,6 @@ from ocean_lib.web3_internal.constants import ZERO_ADDRESS
 from ocean_lib.models.compute_input import ComputeInput
 import pickle, numpy, time
 from matplotlib import pyplot
-import azure.functions as func
 
 app = Flask(__name__)
 
@@ -48,11 +47,6 @@ config.block_confirmations, config.transaction_timeout)
 #Create Wallet for Data Consumer
 bob_wallet = Wallet(ocean.web3, Bob_Wallet_Private_Key, 
 config.block_confirmations, config.transaction_timeout)
-
-def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:
-    """Each request is redirected to the WSGI handler.
-    """
-    return func.WsgiMiddleware(app.wsgi_app).handle(req, context)
 
 #Create Data Provider Wallet
 @app.route("/alpha/createwallet", methods=["GET"], endpoint='create_wallet')
