@@ -9,5 +9,5 @@
         "routePrefix": ""
     }
   },
-  "functionTimeout": "-1"
+  "functionTimeout": "00:09:59"
 }
