@@ -111,12 +111,53 @@
         }
       }
     },
-    "/alpha/authorizealgorithm": {
+    "/alpha/acquiredatatokens": {
+      "get": {
+        "tags": [
+          "acquiredatatokens"
+        ],
+        "description": "Returns acquired datatokens",
+        "responses": {
+          "200": {
+            "description": "Datatokens acquired",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/authorizealgorithm/{DATA_datatoken_address}/{ALG_datatoken_address}": {
       "get": {
         "tags": [
           "authorizealgorithm"
         ],
         "description": "Returns authorized algorithm",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "DATA_datatoken_address",
+            "required": true,
+            "description": "DATA_datatoken_address",
+            "schema": {
+              "type": "string",
+              "example": "0xB072DeeA57baa17FfBae3cC6829C9577d00f42Fb"
+            }
+          },{
+            "in": "path",
+            "name": "ALG_datatoken_address",
+            "required": true,
+            "description": "ALG_datatoken_address",
+            "schema": {
+              "type": "string",
+              "example": "0xdf6c6b1198207AA1d7510a163190463ef0c982e0"
+            }
+          }],
         "responses": {
           "200": {
             "description": "Algorithm authorized",
@@ -132,7 +173,7 @@
         }
       }
     },
-    "/alpha/makepayment/{DATA_did}/{ALG_did}/{ALG_datatoken_address}": {
+    "/alpha/makepayment/{DATA_did}/{ALG_did}": {
       "get": {
         "tags": [
           "makepayment"
@@ -157,17 +198,7 @@
               "type": "string",
               "example": "did:op:bC14832ddA5755a37dBD821786132B2Fc080a101"
             }
-          },{
-            "in": "path",
-            "name": "ALG_datatoken_address",
-            "required": true,
-            "description": "ALG_datatoken_address",
-            "schema": {
-              "type": "string",
-              "example": "0xbC14832ddA5755a37dBD821786132B2Fc080a101"
-            }
-          }
-        ],
+          }],
         "responses": {
           "200": {
             "description": "Payment made",
