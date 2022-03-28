@@ -199,7 +199,7 @@
           },{
             "in": "path",
             "name": "ALG_datatoken_address",
-            "required": false,
+            "required": true,
             "description": "ALG_datatoken_address",
             "schema": {
               "type": "string",
