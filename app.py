@@ -11,6 +11,7 @@ from ocean_lib.assets import trusted_algorithms
 from ocean_lib.web3_internal.constants import ZERO_ADDRESS
 from ocean_lib.models.compute_input import ComputeInput
 import pickle, numpy, time, asyncio
+from aioflask import Flask, render_template
 from matplotlib import pyplot
 
 app = Flask(__name__)
