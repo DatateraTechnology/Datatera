@@ -10,7 +10,7 @@ json-sempai >= 0.4.0
 scipy >= 1.7.3
 flask_swagger >= 0.2.14
 flask
-ocean-lib >= 0.8.5
+ocean_lib >= 0.8.5
 ocean-contracts >=0.6.9
 matplotlib >= 3.5.1
 azure-functions
