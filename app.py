@@ -173,10 +173,25 @@ def publish_algorithm():
 
     return jsonify(f"ALG_ddo = '{ALG_ddo}' ALG_ddo.did = '{ALG_ddo.did}'")
 
-#Authorize Algorithm
-@app.route("/alpha/authorizealgorithm", methods=["GET"], endpoint='authorize_algorithm')
-def authorize_algorithm():
+#Acquire Datatokens   
+@app.route("/alpha/acquiredatatokens", methods=["GET"], endpoint='acquire_datatokens')
+def acquire_datatokens():
+    
+    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
+    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
+    
+    DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+    ALG_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+
+    return jsonify(f"DATA_datatoken.address: {DATA_datatoken.address} ALG_datatoken.address: {ALG_datatoken.address}")
+
+#Authorize Algorithm
+@app.route("/alpha/authorizealgorithm/<string:DATA_datatoken_address>/<string:ALG_datatoken_address>", methods=["GET"], endpoint='authorize_algorithm')
+def authorize_algorithm(DATA_datatoken_address, ALG_datatoken_address):
+    
     DATA_metadata = {
     "main": {
         "type": "dataset",
@@ -206,18 +221,12 @@ def authorize_algorithm():
         service_endpoint = provider_url,
         service_type = ServiceTypes.CLOUD_COMPUTE,
         attributes = DATA_service_attributes)
-
-    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
-    DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
-
-    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
-    ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
  
     DATA_ddo = ocean.assets.create(
     metadata = DATA_metadata,
     publisher_wallet = alice_wallet,
     services = [DATA_compute_service],
-    data_token_address = DATA_datatoken.address)
+    data_token_address = DATA_datatoken_address)
 
     ALG_metadata =  {
     "main": {
@@ -264,33 +273,17 @@ def authorize_algorithm():
     metadata = ALG_metadata,
     publisher_wallet = alice_wallet,
     services = [ALG_access_service],
-    data_token_address = ALG_datatoken.address)
-
-    print(DATA_ddo)
-    print(ALG_ddo.did)
+    data_token_address = ALG_datatoken_address)
 
     trusted_algorithms.add_publisher_trusted_algorithm(DATA_ddo, ALG_ddo.did, config.metadata_cache_uri)
     ocean.assets.update(DATA_ddo, publisher_wallet = alice_wallet)
 
-    DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
-    ALG_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
-
-    DATA_did = DATA_ddo.did
-    ALG_did = ALG_ddo.did
-    DATA_DDO = ocean.assets.resolve(DATA_did)
-    ALG_DDO = ocean.assets.resolve(ALG_did)
-
-    compute_service = DATA_DDO.get_service('compute')
-    algo_service = ALG_DDO.get_service('access')
-
-    return jsonify(f"DATA_did: {DATA_did} ALG_did: {ALG_did} compute_service.type: {compute_service.type}" +
-    f"compute_service.index: {compute_service.index} algo_service.type: {algo_service.type}" +
-    f"algo_service.index: {algo_service.index} ALG_datatoken_address: {ALG_datatoken.address}")
+    return jsonify(f"DATA_did: {DATA_ddo.did} ALG_did: {ALG_ddo.did}")
 
 #Authorize Algorithm
-@app.route("/alpha/makepayment/<string:DATA_did>/<string:ALG_did>/<string:ALG_datatoken_address>", methods=["GET"], endpoint='make_payment')
-def make_payment(DATA_did, ALG_did, ALG_datatoken_address):
-
+@app.route("/alpha/makepayment/<string:DATA_did>/<string:ALG_did>", methods=["GET"], endpoint='make_payment')
+def make_payment(DATA_did, ALG_did):
+    
     compute_service_type = "compute"
     compute_service_index = 4
     algo_service_type = "access"
@@ -322,8 +315,8 @@ def make_payment(DATA_did, ALG_did, ALG_datatoken_address):
         bob_wallet,
         algo_order_requirements.computeAddress)
     
-    return jsonify(f"DATA_did: {DATA_did} DATA_order_tx_id: {DATA_order_tx_id} ALG_order_tx_id: {ALG_order_tx_id}" +
-    f"ALG_did: {ALG_did} ALG_datatoken_address: {ALG_datatoken_address}")
+    return jsonify(f"DATA_did: {DATA_did} DATA_order_tx_id: {DATA_order_tx_id} ALG_order_tx_id: {ALG_order_tx_id} " +
+    f"ALG_did: {ALG_did}")
 
 @app.route("/alpha/computejob/<string:DATA_did>/<string:DATA_order_tx_id>/<string:ALG_order_tx_id>/<string:ALG_did>" +
 "/<string:ALG_datatoken_address>", methods=["GET"], endpoint='compute_job')
@@ -348,10 +341,6 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
 
     print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-    time.sleep(30)
-
-    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
-	
     time.sleep(30)
 
     print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
