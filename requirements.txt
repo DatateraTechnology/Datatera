@@ -14,3 +14,4 @@ ocean_lib >= 0.8.5
 ocean-contracts >=0.6.9
 matplotlib >= 3.5.1
 azure-functions
+aioflask
