@@ -61,7 +61,7 @@ def tokenize_dataset():
     DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
     DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
-    return jsonify(f"DATA_datatoken.address = '{DATA_datatoken.address}'")
+    return jsonify(f"DATA_datatoken = '{DATA_datatoken}'")
 
 #Publish Metadata
 @app.route("/alpha/publishmetadata", methods=["GET"], endpoint='publish_metadata')
@@ -106,7 +106,7 @@ def publish_metadata():
     services = [DATA_compute_service],
     data_token_address = DATA_datatoken.address)
 
-    return jsonify(f"DATA_ddo.did = '{DATA_ddo.did}'")
+    return jsonify(f"DATA_ddo = '{DATA_ddo}' DATA_ddo.did = '{DATA_ddo.did}'")
 
 #Tokenize Algorithm
 @app.route("/alpha/tokenizealgorithm", methods=["GET"], endpoint='tokenize_algorithm')
@@ -115,7 +115,7 @@ def tokenize_algorithm():
     ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
     ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
-    return jsonify(f"ALG_datatoken.address = '{ALG_datatoken.address}'")
+    return jsonify(f"ALG_datatoken = '{ALG_datatoken}'")
 
 #Publish Algorithm
 @app.route("/alpha/publishalgorithm", methods=["GET"], endpoint='publish_algorithm')
@@ -171,103 +171,19 @@ def publish_algorithm():
     services = [ALG_access_service],
     data_token_address = ALG_datatoken.address)
 
-    return jsonify(f"ALG did = '{ALG_ddo.did}'")
+    return jsonify(f"ALG_ddo = '{ALG_ddo}' ALG_ddo.did = '{ALG_ddo.did}'")
 
 #Authorize Algorithm
 @app.route("/alpha/authorizealgorithm", methods=["GET"], endpoint='authorize_algorithm')
 def authorize_algorithm():
 
-    DATA_metadata = {
-        "main": {
-            "type": "dataset",
-            "files": [
-        {
-            "url": Dataset_Url,
-            "index": 0,
-            "contentType": "text/text"
-        }
-        ],
-        "name": "branin", "author": "Trent", "license": "CC0",
-        "dateCreated": "2019-12-28T10:55:11Z"
-        }
-    }
+    DATA_datatoken = ""
+    ALG_datatoken = ""
+    DATA_ddo = ""
+    #ALG_ddo = ""
+    ALG_ddo_did = ""
 
-    DATA_service_attributes = {
-    "main": {
-        "name": "DATA_dataAssetAccessServiceAgreement",
-        "creator": alice_wallet.address,
-        "timeout": 3600 * 24,
-        "datePublished": "2019-12-28T10:55:11Z",
-        "cost": 1.0,
-        }
-    }
-
-    provider_url = DataServiceProvider.get_url(ocean.config)
-
-    DATA_compute_service = Service(
-        service_endpoint = provider_url,
-        service_type = ServiceTypes.CLOUD_COMPUTE,
-        attributes=DATA_service_attributes)
-
-    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
-    DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
- 
-    DATA_ddo = ocean.assets.create(
-    metadata = DATA_metadata,
-    publisher_wallet = alice_wallet,
-    services = [DATA_compute_service],
-    data_token_address = DATA_datatoken.address)
-
-    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
-    ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
-    
-    ALG_metadata =  {
-    "main": {
-        "type": "algorithm",
-        "algorithm": {
-            "language": "python",
-            "format": "docker-image",
-            "version": "0.1",
-            "container": {
-              "entrypoint": "python $ALGO",
-              "image": "oceanprotocol/algo_dockers",
-              "tag": "python-branin"
-            }
-        },
-        "files": [
-	  {
-	    "url": Algorithm_Url,
-	    "index": 0,
-	    "contentType": "text/text",
-	  }
-	],
-	"name": "gpr", "author": "Trent", "license": "CC0",
-	"dateCreated": "2020-01-28T10:55:11Z"
-    }
-    }
-
-    ALG_service_attributes = {
-            "main": {
-                "name": "ALG_dataAssetAccessServiceAgreement",
-                "creator": alice_wallet.address,
-                "timeout": 3600 * 24,
-                "datePublished": "2020-01-28T10:55:11Z",
-                "cost": 1.0,
-            }
-        }
-
-    ALG_access_service = Service(
-        service_endpoint = provider_url,
-        service_type = ServiceTypes.CLOUD_COMPUTE,
-        attributes = ALG_service_attributes)
-
-    ALG_ddo = ocean.assets.create(
-    metadata = ALG_metadata,
-    publisher_wallet = alice_wallet,
-    services = [ALG_access_service],
-    data_token_address = ALG_datatoken.address)
-
-    trusted_algorithms.add_publisher_trusted_algorithm(DATA_ddo, ALG_ddo.did, config.metadata_cache_uri)
+    trusted_algorithms.add_publisher_trusted_algorithm(DATA_ddo, ALG_ddo_did, config.metadata_cache_uri)
     ocean.assets.update(DATA_ddo, publisher_wallet = alice_wallet)
 
     DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
@@ -276,8 +192,8 @@ def authorize_algorithm():
     return jsonify(f"DATA_datatoken = '{DATA_datatoken}' ALG_datatoken = '{ALG_datatoken}'")
 
 #Start Compute Job
-@app.route("/alpha/computejob", methods=["GET"], endpoint='compute_job')
-def compute_job():
+@app.route("/alpha/makepayment", methods=["GET"], endpoint='make_payment')
+def make_payment():
 
     DATA_metadata = {
         "main": {
@@ -406,6 +322,14 @@ def compute_job():
         ZERO_ADDRESS,
         bob_wallet,
         algo_order_requirements.computeAddress)
+    
+    return jsonify(f"ALG_order_tx_id: {ALG_order_tx_id} DATA_order_tx_id: {DATA_order_tx_id} compute_service.index: {compute_service.index} DATA_did: {DATA_did} ALG_did: {ALG_did} ALG_datatoken: {ALG_datatoken} ALG_datatoken_address: {ALG_datatoken.address}")
+
+@app.route("/alpha/computejob/<string:DATA_did>/<string:DATA_order_tx_id>/<string:ALG_order_tx_id>/<string:ALG_did>/<string:ALG_datatoken_address>", methods=["GET"], endpoint='compute_job')
+def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datatoken_address):
+
+    DATA_DDO = ocean.assets.resolve(DATA_did)
+    compute_service = DATA_DDO.get_service('compute')
 
     compute_inputs = [ComputeInput(DATA_did, DATA_order_tx_id, compute_service.index)]
     job_id = ocean.compute.start(
@@ -413,7 +337,7 @@ def compute_job():
     bob_wallet,
     algorithm_did = ALG_did,
     algorithm_tx_id = ALG_order_tx_id,
-    algorithm_data_token = ALG_datatoken.address)
+    algorithm_data_token = ALG_datatoken_address)
 
     time.sleep(30)
 
@@ -450,6 +374,3 @@ def compute_job():
     pyplot.show()
 
     return jsonify(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
-
-if __name__ == "__main__":
-    app.run()
