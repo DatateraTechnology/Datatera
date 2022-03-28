@@ -10,7 +10,7 @@ from ocean_lib.common.agreements.service_types import ServiceTypes
 from ocean_lib.assets import trusted_algorithms
 from ocean_lib.web3_internal.constants import ZERO_ADDRESS
 from ocean_lib.models.compute_input import ComputeInput
-import pickle, numpy, time
+import pickle, numpy, time, asyncio
 from matplotlib import pyplot
 
 app = Flask(__name__)
@@ -326,7 +326,7 @@ def make_payment():
     return jsonify(f"ALG_order_tx_id: {ALG_order_tx_id} DATA_order_tx_id: {DATA_order_tx_id} compute_service.index: {compute_service.index} DATA_did: {DATA_did} ALG_did: {ALG_did} ALG_datatoken: {ALG_datatoken} ALG_datatoken_address: {ALG_datatoken.address}")
 
 @app.route("/alpha/computejob/<string:DATA_did>/<string:DATA_order_tx_id>/<string:ALG_order_tx_id>/<string:ALG_did>/<string:ALG_datatoken_address>", methods=["GET"], endpoint='compute_job')
-def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datatoken_address):
+async def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datatoken_address):
 
     DATA_DDO = ocean.assets.resolve(DATA_did)
     compute_service = DATA_DDO.get_service('compute')
@@ -339,21 +339,21 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
     algorithm_tx_id = ALG_order_tx_id,
     algorithm_data_token = ALG_datatoken_address)
 
-    time.sleep(30)
+    await asyncio.sleep(30)
 
     print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-    time.sleep(30)
+    await asyncio.sleep(30)
 
     print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-    time.sleep(30)
+    await asyncio.sleep(30)
 
     print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
-    time.sleep(30)
+    #await asyncio.sleep(30)
 
-    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
+    #print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
     result = ocean.compute.result_file(DATA_did, job_id, 0, bob_wallet)
     print(f"Result: {result}")
