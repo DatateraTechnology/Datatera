@@ -132,15 +132,45 @@
         }
       }
     },
-    "/alpha/makepayment": {
+    "/alpha/makepayment/{DATA_did}/{ALG_did}/{ALG_datatoken_address}": {
       "get": {
         "tags": [
           "makepayment"
         ],
         "description": "Returns made payment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "DATA_did",
+            "required": true,
+            "description": "DATA_did",
+            "schema": {
+              "type": "string",
+              "example": "did:op:12BF0aF3d4fDCF7f0f91B880489351Fd125A48B0"
+            }
+          },{
+            "in": "path",
+            "name": "ALG_did",
+            "required": true,
+            "description": "ALG_did",
+            "schema": {
+              "type": "string",
+              "example": "did:op:bC14832ddA5755a37dBD821786132B2Fc080a101"
+            }
+          },{
+            "in": "path",
+            "name": "ALG_datatoken_address",
+            "required": true,
+            "description": "ALG_datatoken_address",
+            "schema": {
+              "type": "string",
+              "example": "0xbC14832ddA5755a37dBD821786132B2Fc080a101"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Payment paid",
+            "description": "Payment made",
             "content": {
               "text/plain": {
                 "schema": {
