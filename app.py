@@ -351,6 +351,10 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
     time.sleep(30)
 
     print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
+	
+    time.sleep(30)
+
+    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
 
     result = ocean.compute.result_file(DATA_did, job_id, 0, bob_wallet)
     print(f"Result: {result}")
