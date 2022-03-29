@@ -55,17 +55,17 @@ def create_wallet():
     return jsonify(f"alice_wallet.address = '{alice_wallet.address}'")
 
 #Tokenize Dataset
-@app.route("/alpha/tokenizedataset", methods=["GET"], endpoint='tokenize_dataset')
-def tokenize_dataset():
+@app.route("/alpha/tokenizedataset/<string:Data_Name>", methods=["GET"], endpoint='tokenize_dataset')
+def tokenize_dataset(Data_Name):
 
-    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    DATA_datatoken = ocean.create_data_token(Data_Name, Data_Name, alice_wallet, blob=ocean.config.metadata_cache_uri)
     DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
     return jsonify(f"DATA_datatoken = '{DATA_datatoken}' DATA_datatoken.address = '{DATA_datatoken.address}'")
 
 #Publish Metadata
-@app.route("/alpha/publishmetadata", methods=["GET"], endpoint='publish_metadata')
-def publish_metadata():
+@app.route("/alpha/publishmetadata/<string:Data_Name>", methods=["GET"], endpoint='publish_metadata')
+def publish_metadata(Data_Name):
 
     DATA_metadata = {
     "main": {
@@ -97,7 +97,7 @@ def publish_metadata():
         service_type = ServiceTypes.CLOUD_COMPUTE,
         attributes = DATA_service_attributes)
 
-    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    DATA_datatoken = ocean.create_data_token(Data_Name, Data_Name, alice_wallet, blob=ocean.config.metadata_cache_uri)
     DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
  
     DATA_ddo = ocean.assets.create(
@@ -109,19 +109,19 @@ def publish_metadata():
     return jsonify(f"DATA_ddo = '{DATA_ddo}' DATA_ddo.did = '{DATA_ddo.did}'")
 
 #Tokenize Algorithm
-@app.route("/alpha/tokenizealgorithm", methods=["GET"], endpoint='tokenize_algorithm')
-def tokenize_algorithm():
+@app.route("/alpha/tokenizealgorithm/<string:Alg_Name>", methods=["GET"], endpoint='tokenize_algorithm')
+def tokenize_algorithm(Alg_Name):
 
-    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    ALG_datatoken = ocean.create_data_token(Alg_Name, Alg_Name, alice_wallet, blob=ocean.config.metadata_cache_uri)
     ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
     return jsonify(f"ALG_datatoken = '{ALG_datatoken}' ALG_datatoken.address = '{ALG_datatoken.address}'")
 
 #Publish Algorithm
-@app.route("/alpha/publishalgorithm", methods=["GET"], endpoint='publish_algorithm')
-def publish_algorithm():
+@app.route("/alpha/publishalgorithm/<string:Alg_Name>", methods=["GET"], endpoint='publish_algorithm')
+def publish_algorithm(Alg_Name):
 
-    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
+    ALG_datatoken = ocean.create_data_token(Alg_Name, Alg_Name, alice_wallet, blob=ocean.config.metadata_cache_uri)
     ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
     
     ALG_metadata =  {
@@ -172,21 +172,6 @@ def publish_algorithm():
     data_token_address = ALG_datatoken.address)
 
     return jsonify(f"ALG_ddo = '{ALG_ddo}' ALG_ddo.did = '{ALG_ddo.did}'")
-
-#Acquire Datatokens   
-@app.route("/alpha/acquiredatatokens", methods=["GET"], endpoint='acquire_datatokens')
-def acquire_datatokens():
-    
-    DATA_datatoken = ocean.create_data_token('DATA1', 'DATA1', alice_wallet, blob=ocean.config.metadata_cache_uri)
-    DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
-
-    ALG_datatoken = ocean.create_data_token('ALG1', 'ALG1', alice_wallet, blob=ocean.config.metadata_cache_uri)
-    ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
-    
-    DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
-    ALG_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
-
-    return jsonify(f"DATA_datatoken.address: {DATA_datatoken.address} ALG_datatoken.address: {ALG_datatoken.address}")
 
 #Authorize Algorithm
 @app.route("/alpha/authorizealgorithm/<string:DATA_datatoken_address>/<string:ALG_datatoken_address>", methods=["GET"], endpoint='authorize_algorithm')
@@ -279,6 +264,21 @@ def authorize_algorithm(DATA_datatoken_address, ALG_datatoken_address):
     ocean.assets.update(DATA_ddo, publisher_wallet = alice_wallet)
 
     return jsonify(f"DATA_did: {DATA_ddo.did} ALG_did: {ALG_ddo.did}")
+
+#Acquire Datatokens   
+@app.route("/alpha/acquiredatatokens/<string:Data_Name>/<string:Alg_Name>", methods=["GET"], endpoint='acquire_datatokens')
+def acquire_datatokens(Data_Name, Alg_Name):
+    
+    DATA_datatoken = ocean.create_data_token(Data_Name, Data_Name, alice_wallet, blob=ocean.config.metadata_cache_uri)
+    DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
+
+    ALG_datatoken = ocean.create_data_token(Alg_Name, Alg_Name, alice_wallet, blob=ocean.config.metadata_cache_uri)
+    ALG_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
+    
+    DATA_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+    ALG_datatoken.transfer(bob_wallet.address, to_wei(5), from_wallet = alice_wallet)
+
+    return jsonify(f"DATA_datatoken.address: {DATA_datatoken.address} ALG_datatoken.address: {ALG_datatoken.address}")    
 
 #Authorize Algorithm
 @app.route("/alpha/makepayment/<string:DATA_did>/<string:ALG_did>", methods=["GET"], endpoint='make_payment')
