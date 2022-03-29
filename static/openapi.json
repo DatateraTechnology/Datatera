@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0",
     "title": "Datatera Alpha API",
     "description": "An API for Compute-to-Data Flow"
   },
@@ -27,12 +27,24 @@
         }
       }
     },
-    "/alpha/tokenizedataset": {
+    "/alpha/tokenizedataset/{Data_Name}": {
       "get": {
         "tags": [
           "tokenizedataset"
         ],
         "description": "Returns datatoken address for the dataset",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Data_Name",
+            "required": true,
+            "description": "Data_Name",
+            "schema": {
+              "type": "string",
+              "example": "DATAX"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Datatoken address created for the dataset",
@@ -48,12 +60,24 @@
         }
       }
     },
-    "/alpha/publishmetadata": {
+    "/alpha/publishmetadata/{Data_Name}": {
       "get": {
         "tags": [
           "publishmetadata"
         ],
         "description": "Returns published metadata",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Data_Name",
+            "required": true,
+            "description": "Data_Name",
+            "schema": {
+              "type": "string",
+              "example": "DATAX"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Metadata published",
@@ -69,12 +93,24 @@
         }
       }
     },
-    "/alpha/tokenizealgorithm": {
+    "/alpha/tokenizealgorithm/{Alg_Name}": {
       "get": {
         "tags": [
           "tokenizealgorithm"
         ],
         "description": "Returns datatoken address for the algorithm",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Alg_Name",
+            "required": true,
+            "description": "Alg_Name",
+            "schema": {
+              "type": "string",
+              "example": "ALGX"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Datatoken address created for the algorithm",
@@ -90,12 +126,24 @@
         }
       }
     },
-    "/alpha/publishalgorithm": {
+    "/alpha/publishalgorithm/{Alg_Name}": {
       "get": {
         "tags": [
           "publishalgorithm"
         ],
         "description": "Returns published algorithm",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Alg_Name",
+            "required": true,
+            "description": "Alg_Name",
+            "schema": {
+              "type": "string",
+              "example": "ALGX"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Algorithm published",
@@ -152,12 +200,32 @@
         }
       }
     },
-    "/alpha/acquiredatatokens": {
+    "/alpha/acquiredatatokens/{Data_Name}/{Alg_Name}": {
       "get": {
         "tags": [
           "acquiredatatokens"
         ],
         "description": "Returns acquired datatokens",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Data_Name",
+            "required": true,
+            "description": "Data_Name",
+            "schema": {
+              "type": "string",
+              "example": "DATAX"
+            }
+          },{
+            "in": "path",
+            "name": "Alg_Name",
+            "required": true,
+            "description": "Alg_Name",
+            "schema": {
+              "type": "string",
+              "example": "ALGX"
+            }
+          }],
         "responses": {
           "200": {
             "description": "Datatokens acquired",
