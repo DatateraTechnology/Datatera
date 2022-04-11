@@ -13,4 +13,6 @@ flask
 ocean_lib >= 0.8.5
 ocean-contracts >=0.6.9
 matplotlib >= 3.5.1
-azure
+azure-core >=1.23.1
+azure-functions >=1.10.1
+azure-storage-blob >=12.11.0
