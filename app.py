@@ -12,6 +12,9 @@ from ocean_lib.web3_internal.constants import ZERO_ADDRESS
 from ocean_lib.models.compute_input import ComputeInput
 import pickle, numpy, time
 from matplotlib import pyplot
+from azure.storage.blob import BlobClient
+import urllib.request, json
+import os, uuid
 
 app = Flask(__name__)
 
@@ -348,19 +351,30 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
     result = ocean.compute.result_file(DATA_did, job_id, 0, bob_wallet)
     print(f"Result: {result}")
 
-    #model = pickle.loads(result)
+    model = pickle.loads(result)
 
-    #X0_vec = numpy.linspace(-5., 10., 15)
-    #X1_vec = numpy.linspace(0., 15., 15)
-    #X0, X1 = numpy.meshgrid(X0_vec, X1_vec)
-    #b, c, t = 0.12918450914398066, 1.5915494309189535, 0.039788735772973836
-    #u = X1 - b*X0**2 + c*X0 - 6
-    #r = 10.*(1. - t) * numpy.cos(X0) + 10
-    #Z = u**2 + r
+    X0_vec = numpy.linspace(-5., 10., 15)
+    X1_vec = numpy.linspace(0., 15., 15)
+    X0, X1 = numpy.meshgrid(X0_vec, X1_vec)
+    b, c, t = 0.12918450914398066, 1.5915494309189535, 0.039788735772973836
+    u = X1 - b*X0**2 + c*X0 - 6
+    r = 10.*(1. - t) * numpy.cos(X0) + 10
+    Z = u**2 + r
 
-    #fig, ax = pyplot.subplots(subplot_kw={"projection": "3d"})
-    #ax.scatter(X0, X1, model, c="r", label="model")
-    #pyplot.title("Data + model")
-    #pyplot.show()
+    fig, ax = pyplot.subplots(subplot_kw={"projection": "3d"})
+    ax.scatter(X0, X1, model, c="r", label="model")
+    pyplot.title("Data + model")
 
-    return jsonify(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)} Result: {result}")
+    local_path = os.path.expanduser("~/JobResult")
+    if not os.path.exists(local_path):
+            os.makedirs(os.path.expanduser("~/JobResult"))
+    local_file_name = "Result_" + str(uuid.uuid4()) + ".png"
+    full_path_to_file = os.path.join(local_path, local_file_name)
+    pyplot.savefig(full_path_to_file)
+
+    blob = BlobClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=datateraalpha;AccountKey=W890/aL1FprdvAsAV4xXpOof1BZQm5Ujb044t8s2XaHFeA0QBYlffI+KYG72uQCg6Ly8SNkeRki8cOwma4co9A==;EndpointSuffix=core.windows.net", container_name="alpha", blob_name=local_file_name)
+    with open(full_path_to_file, "rb") as data:
+        blob.upload_blob(data)
+    
+    url = "https://datateraalpha.blob.core.windows.net/alpha/" + local_file_name
+    return jsonify(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)} Result: {url}")
