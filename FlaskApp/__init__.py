@@ -32,10 +32,6 @@ def index():
 def hello(name: str):
     return f"hello {name}"
 
-@app.route("/module")
-def module():
-    return f"loaded from FlaskApp.package.module = {MODULE_VALUE}"
-
 @app.route('/api')
 def get_api():
     return render_template('swaggerui.html')
