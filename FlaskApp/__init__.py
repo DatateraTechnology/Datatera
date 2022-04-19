@@ -16,9 +16,6 @@ from azure.storage.blob import BlobClient
 import urllib.request, json
 import os, uuid
 
-# Always use relative import for custom module
-from .package.module import MODULE_VALUE
-
 app = Flask(__name__)
 
 @app.route("/")
