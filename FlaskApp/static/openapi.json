@@ -1,0 +1,31 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0",
+    "title": "Datatera Alpha API",
+    "description": "An API for Compute-to-Data Flow"
+  },
+  "paths": {
+    "/alpha/createwallet": {
+      "get": {
+        "tags": [
+          "createwallet"
+        ],
+        "description": "Returns created wallet",
+        "responses": {
+          "200": {
+            "description": "Wallet Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
