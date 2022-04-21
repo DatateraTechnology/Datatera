@@ -26,6 +26,27 @@
           }
         }
       }
+    },
+    "/alpha/fullflow": {
+      "get": {
+        "tags": [
+          "fullflow"
+        ],
+        "description": "Returns full flow",
+        "responses": {
+          "200": {
+            "description": "Job done",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
