@@ -350,6 +350,27 @@
           }
         }
       }
+    },
+    "/alpha/fullflow": {
+      "get": {
+        "tags": [
+          "fullflow - RUN ONLY LOCALLY"
+        ],
+        "description": "Returns completed job",
+        "responses": {
+          "200": {
+            "description": "Full C2D flow completed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": ""
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
