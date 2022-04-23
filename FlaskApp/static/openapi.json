@@ -30,12 +30,12 @@
     "/alpha/fullflow": {
       "get": {
         "tags": [
-          "fullflow"
+          "fullflow - RUN ONLY LOCALLY"
         ],
-        "description": "Returns full flow",
+        "description": "Returns completed job",
         "responses": {
           "200": {
-            "description": "Job done",
+            "description": "Full C2D flow completed",
             "content": {
               "text/plain": {
                 "schema": {
