@@ -20,10 +20,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return (
-        "Try /hello/Chris for parameterized Flask route.\n"
-        "Try /module for module import guidance"
-    )
+    swag = swagger(app)
+    swag['info']['version'] = "v.1.0"
+    swag['info']['title'] = "Welcome to Datatera Alpha"
+    return jsonify(swag)
 
 @app.route("/hello/<name>", methods=['GET'])
 def hello(name: str):
@@ -140,8 +140,6 @@ def full_flow():
             }
         }
 
-    provider_url = DataServiceProvider.get_url(ocean.config)
-
     ALG_access_service = Service(
         service_endpoint = provider_url,
         service_type = ServiceTypes.CLOUD_COMPUTE,
@@ -230,9 +228,9 @@ def full_flow():
     ax.scatter(X0, X1, model, c="r", label="model")
     pyplot.title("Data + model")
 
-    local_path = os.path.expanduser("~/Sample")
+    local_path = os.path.expanduser("~/JobResult")
     if not os.path.exists(local_path):
-            os.makedirs(os.path.expanduser("~/Sample"))
+            os.makedirs(os.path.expanduser("~/JobResult"))
     local_file_name = "Result_" + str(uuid.uuid4()) + ".png"
     full_path_to_file = os.path.join(local_path, local_file_name)
     pyplot.savefig(full_path_to_file)
