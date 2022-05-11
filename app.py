@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from ocean_lib.ocean.ocean import Ocean
 from ocean_lib.config import Config
 from ocean_lib.web3_internal.wallet import Wallet
@@ -379,9 +379,13 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
     url = "https://datateraalpha.blob.core.windows.net/alpha/" + local_file_name
     return jsonify(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)} Result: {url}")
 
-#Full Flow - RUN ONLY LOCALLY
+#Full Flow
 @app.route("/alpha/fullflow", methods=["GET"], endpoint='full_flow')
 def full_flow():
+	
+    Data_Url = request.args.get('Data_Url')
+    Algo_Url = request.args.get('Algo_Url')
+	
     DATA_datatoken = ocean.create_data_token('DAT', 'DAT', alice_wallet, blob=ocean.config.metadata_cache_uri)
     DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
@@ -393,7 +397,7 @@ def full_flow():
         "type": "dataset",
         "files": [
 	  {
-	    "url": Dataset_Url,
+	    "url": Data_Url,
 	    "index": 0,
 	    "contentType": "text/text"
 	  }
@@ -439,7 +443,7 @@ def full_flow():
         },
         "files": [
 	  {
-	    "url": Algorithm_Url,
+	    "url": Algo_Url,
 	    "index": 0,
 	    "contentType": "text/text",
 	  }
