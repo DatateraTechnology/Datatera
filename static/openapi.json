@@ -354,9 +354,31 @@
     "/alpha/fullflow": {
       "get": {
         "tags": [
-          "fullflow - RUN ONLY LOCALLY"
+          "fullflow"
         ],
         "description": "Returns completed job",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "Data_Url",
+            "required": true,
+            "allowreserved": true,
+            "description": "Data_Url",
+            "schema": {
+              "type": "string",
+              "example": "https://raw.githubusercontent.com/trentmc/branin/main/branin.arff"
+            }
+          },{
+            "in": "query",
+            "name": "Algo_Url",
+            "required": true,
+            "allowreserved": true,
+            "description": "Algo_Url",
+            "schema": {
+              "type": "string",
+              "example": "https://raw.githubusercontent.com/trentmc/branin/main/gpr.py"
+            }
+          }],
         "responses": {
           "200": {
             "description": "Full C2D flow completed",
