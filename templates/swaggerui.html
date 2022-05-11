@@ -49,6 +49,10 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
+        requestInterceptor: request => {
+            request.url = request.url.replaceAll("%3A%2F%2F", "://").replaceAll("%2F", "/")
+            return request
+          },
         layout: "StandaloneLayout"
       });
       // End Swagger UI call region
