@@ -362,7 +362,7 @@
             "in": "query",
             "name": "Data_Url",
             "required": true,
-            "allowreserved": true,
+            "allowReserved": true,
             "description": "Data_Url",
             "schema": {
               "type": "string",
@@ -372,7 +372,7 @@
             "in": "query",
             "name": "Algo_Url",
             "required": true,
-            "allowreserved": true,
+            "allowReserved": true,
             "description": "Algo_Url",
             "schema": {
               "type": "string",
