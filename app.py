@@ -335,20 +335,15 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
     algorithm_tx_id = ALG_order_tx_id,
     algorithm_data_token = ALG_datatoken_address)
 
-    time.sleep(30)
+    for _ in range(0, 200):
+        status = ocean.compute.status(DATA_ddo.did, job_id, bob_wallet)
+        if status.get("status") and int(status["status"]) == 70:
+            print(f"Status: {status}")
+            break
+    time.sleep(5)
 
-    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
-
-    time.sleep(30)
-
-    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
-
-    time.sleep(30)
-
-    print(f"Job Status: {ocean.compute.status(DATA_did, job_id, bob_wallet)}")
-
-    result = ocean.compute.result_file(DATA_did, job_id, 0, bob_wallet)
-    print(f"Result: {result}")
+    result = ocean.compute.result_file(DATA_ddo.did, job_id, 0, bob_wallet)
+    print("==========\n")
 
     model = pickle.loads(result)
 
@@ -382,10 +377,10 @@ def compute_job(DATA_did, DATA_order_tx_id, ALG_order_tx_id, ALG_did, ALG_datato
 #Full Flow
 @app.route("/alpha/fullflow", methods=["GET"], endpoint='full_flow')
 def full_flow():
-	
+
     Data_Url = request.args.get('Data_Url')
     Algo_Url = request.args.get('Algo_Url')
-	
+  
     DATA_datatoken = ocean.create_data_token('DAT', 'DAT', alice_wallet, blob=ocean.config.metadata_cache_uri)
     DATA_datatoken.mint(alice_wallet.address, to_wei(100), alice_wallet)
 
@@ -514,6 +509,7 @@ def full_flow():
     compute_service = DATA_DDO.get_service('compute')
 
     compute_inputs = [ComputeInput(DATA_ddo.did, DATA_order_tx_id, compute_service.index)]
+
     job_id = ocean.compute.start(
     compute_inputs,
     bob_wallet,
@@ -521,20 +517,15 @@ def full_flow():
     algorithm_tx_id = ALG_order_tx_id,
     algorithm_data_token = ALG_datatoken.address)
 
-    time.sleep(30)
-
-    print(f"Job Status: {ocean.compute.status(DATA_ddo.did, job_id, bob_wallet)}")
-
-    time.sleep(30)
-
-    print(f"Job Status: {ocean.compute.status(DATA_ddo.did, job_id, bob_wallet)}")
-
-    time.sleep(30)
-
-    print(f"Job Status: {ocean.compute.status(DATA_ddo.did, job_id, bob_wallet)}")
+    for _ in range(0, 200):
+        status = ocean.compute.status(DATA_ddo.did, job_id, bob_wallet)
+        if status.get("status") and int(status["status"]) == 70:
+            print(f"Status: {status}")
+            break
+    time.sleep(5)
 
     result = ocean.compute.result_file(DATA_ddo.did, job_id, 0, bob_wallet)
-    print(f"Result: {result}")
+    print("==========\n")
 
     model = pickle.loads(result)
 
