@@ -1,0 +1,359 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Datatera Alpha API",
+    "description" : "An API for Compute-to-Data Flow",
+    "version" : "1.0"
+  },
+  "servers" : [ {
+    "url" : "https://datatera-alpha.azurewebsites.net",
+    "description" : "Datatera Alpha v1.0"
+  } ],
+  "paths" : {
+    "/alpha/createwallet" : {
+      "get" : {
+        "tags" : [ "createwallet" ],
+        "description" : "Returns created wallet",
+        "responses" : {
+          "200" : {
+            "description" : "Wallet Created",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/tokenizedataset/{Data_Name}" : {
+      "get" : {
+        "tags" : [ "tokenizedataset" ],
+        "description" : "Returns datatoken address for the dataset",
+        "parameters" : [ {
+          "name" : "Data_Name",
+          "in" : "path",
+          "description" : "Data_Name",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "DATAX"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Datatoken address created for the dataset",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/publishmetadata/{Data_Name}" : {
+      "get" : {
+        "tags" : [ "publishmetadata" ],
+        "description" : "Returns published metadata",
+        "parameters" : [ {
+          "name" : "Data_Name",
+          "in" : "path",
+          "description" : "Data_Name",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "DATAX"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Metadata published",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/tokenizealgorithm/{Alg_Name}" : {
+      "get" : {
+        "tags" : [ "tokenizealgorithm" ],
+        "description" : "Returns datatoken address for the algorithm",
+        "parameters" : [ {
+          "name" : "Alg_Name",
+          "in" : "path",
+          "description" : "Alg_Name",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "ALGX"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Datatoken address created for the algorithm",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/publishalgorithm/{Alg_Name}" : {
+      "get" : {
+        "tags" : [ "publishalgorithm" ],
+        "description" : "Returns published algorithm",
+        "parameters" : [ {
+          "name" : "Alg_Name",
+          "in" : "path",
+          "description" : "Alg_Name",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "ALGX"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Algorithm published",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/authorizealgorithm/{DATA_datatoken_address}/{ALG_datatoken_address}" : {
+      "get" : {
+        "tags" : [ "authorizealgorithm" ],
+        "description" : "Returns authorized algorithm",
+        "parameters" : [ {
+          "name" : "DATA_datatoken_address",
+          "in" : "path",
+          "description" : "DATA_datatoken_address",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "0xB072DeeA57baa17FfBae3cC6829C9577d00f42Fb"
+          }
+        }, {
+          "name" : "ALG_datatoken_address",
+          "in" : "path",
+          "description" : "ALG_datatoken_address",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "0xdf6c6b1198207AA1d7510a163190463ef0c982e0"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Algorithm authorized",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/acquiredatatokens/{Data_Name}/{Alg_Name}" : {
+      "get" : {
+        "tags" : [ "acquiredatatokens" ],
+        "description" : "Returns acquired datatokens",
+        "parameters" : [ {
+          "name" : "Data_Name",
+          "in" : "path",
+          "description" : "Data_Name",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "DATAX"
+          }
+        }, {
+          "name" : "Alg_Name",
+          "in" : "path",
+          "description" : "Alg_Name",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "ALGX"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Datatokens acquired",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/makepayment/{DATA_did}/{ALG_did}" : {
+      "get" : {
+        "tags" : [ "makepayment" ],
+        "description" : "Returns made payment",
+        "parameters" : [ {
+          "name" : "DATA_did",
+          "in" : "path",
+          "description" : "DATA_did",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "did:op:98b50F9D421Cf6301b4f65FE630e62106Dd2D560"
+          }
+        }, {
+          "name" : "ALG_did",
+          "in" : "path",
+          "description" : "ALG_did",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "did:op:44463124ee1dAFC146e119fD9C571eEF86C0a2A7"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Payment made",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alpha/computejob/{DATA_did}/{DATA_order_tx_id}/{ALG_order_tx_id}/{ALG_did}/{ALG_datatoken_address}" : {
+      "get" : {
+        "tags" : [ "computejob" ],
+        "description" : "Returns computed job",
+        "parameters" : [ {
+          "name" : "DATA_did",
+          "in" : "path",
+          "description" : "DATA_did",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "did:op:12BF0aF3d4fDCF7f0f91B880489351Fd125A48B0"
+          }
+        }, {
+          "name" : "DATA_order_tx_id",
+          "in" : "path",
+          "description" : "DATA_order_tx_id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "0x0d854807778117b4438ec24c286dc7890d39c86de913931007574d54083d9c6e"
+          }
+        }, {
+          "name" : "ALG_order_tx_id",
+          "in" : "path",
+          "description" : "ALG_order_tx_id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "0xa71a62ef8311ed9b0a6ef68f41bc57d74bd415a6bddd6455b1bfadd83a1b2863"
+          }
+        }, {
+          "name" : "ALG_did",
+          "in" : "path",
+          "description" : "ALG_did",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "did:op:bC14832ddA5755a37dBD821786132B2Fc080a101"
+          }
+        }, {
+          "name" : "ALG_datatoken_address",
+          "in" : "path",
+          "description" : "ALG_datatoken_address",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "example" : "0xbC14832ddA5755a37dBD821786132B2Fc080a101"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Job computed",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string",
+                  "example" : ""
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : { }
+}
